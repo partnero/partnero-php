@@ -23,17 +23,19 @@ class Customer extends AbstractEndpoint
      * @param array $partner
      * @param array|null $transaction
      * @return array
+     * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
-     * @throws ClientExceptionInterface
      */
-    public function create(array $customer, array $partner, ?array $transaction): array
+    public function create(array $customer, array $partner, ?array $transaction = null): array
     {
-        return $this->call('post', [
-            'customer' => $customer,
-            'partner' => $partner,
-            'reward' => $transaction
-        ]);
+        $params = ['customer' => $customer, 'partner' => $partner];
+
+        if (!empty($transaction)) {
+            $params['reward'] = $transaction;
+        }
+
+        return $this->call('post', $params);
     }
 
     /**

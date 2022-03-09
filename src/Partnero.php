@@ -106,7 +106,7 @@ class Partnero
     {
         $this->options = self::$defaultOptions;
         foreach ($options as $option => $value) {
-            $option = mb_strtolower($option);
+            $option = strtolower($option);
             if (array_key_exists($option, $this->options)) {
                 $this->options[$option] = $value;
             }

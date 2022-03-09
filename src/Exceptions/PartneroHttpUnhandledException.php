@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Partnero\Exceptions;
 
-use JsonException;
+use Throwable;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Client\RequestExceptionInterface;
 
-class PartneroHttpException extends PartneroException implements RequestExceptionInterface
+class PartneroHttpUnhandledException extends PartneroException implements RequestExceptionInterface
 {
-    /**
-     * @var array
-     */
-    protected array $data = [];
-
     /**
      * @var RequestInterface
      */
@@ -29,17 +24,22 @@ class PartneroHttpException extends PartneroException implements RequestExceptio
     /**
      * @param RequestInterface $request
      * @param ResponseInterface $response
-     * @throws JsonException
+     * @param Throwable|null $previous
      */
-    public function __construct(RequestInterface $request, ResponseInterface $response)
+    public function __construct(RequestInterface $request, ResponseInterface $response, ?Throwable $previous = null)
     {
         $this->request = $request;
         $this->response = $response;
 
-        $body = $response->getBody()->getContents();
-        $this->data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+        $message = sprintf(
+            '[url] %s [http method] %s [status code] %s [reason phrase] %s',
+            $request->getRequestTarget(),
+            $request->getMethod(),
+            $response->getStatusCode(),
+            $response->getReasonPhrase()
+        );
 
-        parent::__construct($this->data['message'] ?? '');
+        parent::__construct($message, $response->getStatusCode(), $previous);
     }
 
     /**
@@ -56,13 +56,5 @@ class PartneroHttpException extends PartneroException implements RequestExceptio
     public function getRequest(): RequestInterface
     {
         return $this->request;
-    }
-
-    /**
-     * @return array
-     */
-    public function getData(): mixed
-    {
-        return $this->data;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Partnero\Http;
 
 use JsonException;
@@ -150,13 +152,10 @@ class HttpLayer
         $body = '';
 
         if ($response->getBody()) {
-            switch ($contentType) {
-                case 'application/json':
-                    $body = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-                    break;
-                default:
-                    $body = $response->getBody()->getContents();
-            }
+            $body = match ($contentType) {
+                'application/json' => json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR),
+                default => $response->getBody()->getContents(),
+            };
         }
 
         return [

@@ -42,9 +42,9 @@ abstract class AbstractEndpoint
      * @param array $body
      * @param string|null $uri
      * @return array
-     * @throws RequestException
-     * @throws JsonException
      * @throws ClientExceptionInterface
+     * @throws JsonException
+     * @throws RequestException
      */
     public function call(string $method, array $body = [], ?string $uri = null):array
     {
