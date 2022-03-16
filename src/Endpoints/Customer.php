@@ -29,13 +29,13 @@ class Customer extends AbstractEndpoint
      */
     public function create(array $customer, array $partner, ?array $transaction = null): array
     {
-        $params = ['customer' => $customer, 'partner' => $partner];
+        $data = ['customer' => $customer, 'partner' => $partner];
 
         if (!empty($transaction)) {
-            $params['reward'] = $transaction;
+            $data['reward'] = $transaction;
         }
 
-        return $this->call('post', $params);
+        return $this->call('post', $data);
     }
 
     /**

@@ -20,13 +20,21 @@ class Transactions extends AbstractEndpoint
 
     /**
      * @param array $data
+     * @param array $customer
+     * @param array|null $partner
      * @return array
+     * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
-     * @throws ClientExceptionInterface
      */
-    public function create(array $data): array
+    public function create(array $data, array $customer, ?array $partner = null): array
     {
+        $data['customer'] = $customer;
+
+        if (!empty($partner)) {
+            $data['partner'] = $customer;
+        }
+
         return $this->call('post', $data);
     }
 
