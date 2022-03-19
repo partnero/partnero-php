@@ -7,6 +7,7 @@ namespace Partnero\Endpoints;
 use JsonException;
 use Partnero\Partnero;
 use Partnero\Http\HttpLayer;
+use Partnero\Models\AbstractModel;
 use Partnero\Exceptions\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -46,7 +47,7 @@ abstract class AbstractEndpoint
      * @throws JsonException
      * @throws RequestException
      */
-    public function call(string $method, array $body = [], ?string $uri = null):array
+    public function call(string $method, array $body = [], ?string $uri = null): array
     {
         $uri = $this->uri($uri ?? $this->getEndpointUri());
         return match (strtoupper($method)) {
@@ -74,5 +75,14 @@ abstract class AbstractEndpoint
     {
         $url = sprintf('%s://%s', $this->options[Partnero::OPTION_PROTOCOL], $this->options[Partnero::OPTION_HOST]);
         return empty($this->options[Partnero::OPTION_API_PATH]) ? $url : $url . '/' . $this->options[Partnero::OPTION_API_PATH];
+    }
+
+    /**
+     * @param array|AbstractModel $model
+     * @return array
+     */
+    protected function modelData(array|AbstractModel $model): array
+    {
+        return ($model instanceof AbstractModel) ? $model->toArray() : $model;
     }
 }

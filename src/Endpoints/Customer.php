@@ -6,7 +6,10 @@ namespace Partnero\Endpoints;
 
 use JsonException;
 use Partnero\Exceptions\RequestException;
+use Partnero\Models\Partner as PartnerModel;
 use Psr\Http\Client\ClientExceptionInterface;
+use Partnero\Models\Customer as CustomerModel;
+use Partnero\Models\Transaction as TransactionModel;
 
 class Customer extends AbstractEndpoint
 {
@@ -19,66 +22,72 @@ class Customer extends AbstractEndpoint
     }
 
     /**
-     * @param array $customer
-     * @param array $partner
-     * @param array|null $transaction
+     * @param array|CustomerModel $customer
+     * @param array|PartnerModel $partner
+     * @param array|TransactionModel|null $transaction
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function create(array $customer, array $partner, ?array $transaction = null): array
-    {
-        $data = ['customer' => $customer, 'partner' => $partner];
+    public function create(
+        array|CustomerModel $customer,
+        array|PartnerModel $partner,
+        array|TransactionModel $transaction = null
+    ): array {
+        $data = [
+            'customer' => $this->modelData($customer),
+            'partner' => $this->modelData($partner)
+        ];
 
         if (!empty($transaction)) {
-            $data['reward'] = $transaction;
+            $data['reward'] = $this->modelData($transaction);
         }
 
         return $this->call('post', $data);
     }
 
     /**
-     * @param string $key
+     * @param string|CustomerModel $key
      * @return array
      * @throws ClientExceptionInterface
-     * @throws RequestException
      * @throws JsonException
+     * @throws RequestException
      */
-    public function get(string $key): array
+    public function get(string|CustomerModel $key): array
     {
         return $this->call('get', [
-            'key' => $key
+            'key' => (string)$key
         ]);
     }
 
     /**
-     * @param string $key
-     * @param array $data
+     * @param string|CustomerModel $key
+     * @param array|CustomerModel $customer
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function update(string $key, array $data): array
+    public function update(string|CustomerModel $key, array|CustomerModel $customer): array
     {
         return $this->call('put', [
-            'key' => $key,
-            'update' => $data
+            'key' => (string)$key,
+            'update' => $this->modelData($customer)
         ]);
     }
 
     /**
-     * @param string $key
+     * @param string|CustomerModel $key
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function delete(string $key): array
+    public function delete(string|CustomerModel $key): array
     {
         return $this->call('delete', [
-            'key' => $key,
+            'key' => (string)$key,
         ]);
     }
 }
