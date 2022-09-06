@@ -110,6 +110,7 @@ class Transaction extends AbstractModel
 
     /**
      * @return float|null
+     * @deprecated use getAmount()
      */
     public function getReward(): ?float
     {
@@ -119,6 +120,7 @@ class Transaction extends AbstractModel
     /**
      * @param float|null $reward
      * @return $this
+     * @deprecated use setAmount()
      */
     public function setReward(?float $reward): Transaction
     {
