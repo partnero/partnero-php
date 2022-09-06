@@ -129,7 +129,7 @@ class Partner extends AbstractModel
     /**
      * @return bool|null
      */
-    public function getCreateIfNotExists(): ?bool
+    public function getCreateIfNotExist(): ?bool
     {
         return $this->createIfNotExists;
     }
@@ -138,7 +138,7 @@ class Partner extends AbstractModel
      * @param bool|null $createIfNotExists
      * @return $this
      */
-    public function setCreateIfNotExists(?bool $createIfNotExists): Partner
+    public function setCreateIfNotExist(?bool $createIfNotExists): Partner
     {
         $this->createIfNotExists = $createIfNotExists;
         return $this;
@@ -155,7 +155,7 @@ class Partner extends AbstractModel
             'name' => $this->getName(),
             'surname' => $this->getSurname(),
             'password' => $this->getPassword(),
-            'create_if_not_exist' => $this->getCreateIfNotExists(),
+            'create_if_not_exist' => $this->getCreateIfNotExist(),
         ];
     }
 

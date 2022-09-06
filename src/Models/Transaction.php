@@ -7,11 +7,6 @@ namespace Partnero\Models;
 class Transaction extends AbstractModel
 {
     /**
-     * @var int|null
-     */
-    protected ?int $id = null;
-
-    /**
      * @var string|null
      */
     protected ?string $key = null;
@@ -22,32 +17,24 @@ class Transaction extends AbstractModel
     protected ?string $action = null;
 
     /**
-     * @var mixed|null
+     * @var float|null
      */
-    protected mixed $reward = null;
+    protected ?float $amount = null;
 
     /**
      * @var string|null
      */
-    protected ?string $rewardUnits = null;
+    protected ?string $amountUnits = null;
 
     /**
-     * @return int|null
+     * @var bool|null
      */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    protected ?bool $rewardable = null;
 
     /**
-     * @param int|null $id
-     * @return $this
+     * @var string|null
      */
-    public function setId(?int $id): Transaction
-    {
-        $this->id = $id;
-        return $this;
-    }
+    protected ?string $status = null;
 
     /**
      * @return string|null
@@ -86,38 +73,112 @@ class Transaction extends AbstractModel
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getReward(): mixed
+    public function getAmount(): ?float
     {
-        return $this->reward;
+        return $this->amount;
     }
 
     /**
-     * @param mixed $reward
+     * @param float|null $amount
      * @return $this
      */
-    public function setReward(mixed $reward): Transaction
+    public function setAmount(?float $amount): Transaction
     {
-        $this->reward = $reward;
+        $this->amount = $amount;
         return $this;
     }
 
     /**
      * @return string|null
      */
+    public function getAmountUnits(): ?string
+    {
+        return $this->amountUnits;
+    }
+
+    /**
+     * @param string|null $amountUnits
+     * @return $this
+     */
+    public function setAmountUnits(?string $amountUnits): Transaction
+    {
+        $this->amountUnits = $amountUnits;
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getReward(): ?float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param float|null $reward
+     * @return $this
+     */
+    public function setReward(?float $reward): Transaction
+    {
+        $this->amount = $reward;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     * @deprecated use getAmountUnits()
+     */
     public function getRewardUnits(): ?string
     {
-        return $this->rewardUnits;
+        return $this->amountUnits;
     }
 
     /**
      * @param string|null $rewardUnits
      * @return $this
+     * @deprecated use setAmountUnits()
      */
     public function setRewardUnits(?string $rewardUnits): Transaction
     {
-        $this->rewardUnits = $rewardUnits;
+        $this->amountUnits = $rewardUnits;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getRewardable(): ?bool
+    {
+        return $this->rewardable;
+    }
+
+    /**
+     * @param bool|null $rewardable
+     * @return $this
+     */
+    public function setRewardable(?bool $rewardable): Transaction
+    {
+        $this->rewardable = $rewardable;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string|null $status
+     * @return $this
+     */
+    public function setStatus(?string $status): Transaction
+    {
+        $this->status = $status;
         return $this;
     }
 
@@ -127,11 +188,12 @@ class Transaction extends AbstractModel
     public function __toArray(): array
     {
         return [
-            'id' => $this->getId(),
             'key' => $this->getKey(),
-            'reward' => $this->getReward(),
+            'amount' => $this->getAmount(),
             'action' => $this->getAction(),
-            'reward_units' => $this->getRewardUnits(),
+            'status' => $this->getStatus(),
+            'rewardable' => $this->getRewardable(),
+            'amount_units' => $this->getAmountUnits(),
         ];
     }
 
