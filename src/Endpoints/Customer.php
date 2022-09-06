@@ -41,7 +41,7 @@ class Customer extends AbstractEndpoint
         ];
 
         if (!empty($transaction)) {
-            $data['reward'] = $this->modelData($transaction);
+            $data['transaction'] = $this->modelData($transaction);
         }
 
         return $this->call('post', $data);
