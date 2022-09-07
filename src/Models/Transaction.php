@@ -32,6 +32,11 @@ class Transaction extends AbstractModel
     protected ?bool $rewardable = null;
 
     /**
+     * @var bool|null
+     */
+    protected ?bool $rewarded = null;
+
+    /**
      * @var string|null
      */
     protected ?string $status = null;
@@ -167,6 +172,24 @@ class Transaction extends AbstractModel
     }
 
     /**
+     * @return bool|null
+     */
+    public function getRewarded(): ?bool
+    {
+        return $this->rewarded;
+    }
+
+    /**
+     * @param bool|null $rewarded
+     * @return $this
+     */
+    public function setRewarded(?bool $rewarded): Transaction
+    {
+        $this->rewarded = $rewarded;
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     public function getStatus(): ?string
@@ -194,6 +217,7 @@ class Transaction extends AbstractModel
             'amount' => $this->getAmount(),
             'action' => $this->getAction(),
             'status' => $this->getStatus(),
+            'rewarded' => $this->getRewarded(),
             'rewardable' => $this->getRewardable(),
             'amount_units' => $this->getAmountUnits(),
         ];
