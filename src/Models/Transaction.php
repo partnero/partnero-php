@@ -97,6 +97,7 @@ class Transaction extends AbstractModel
 
     /**
      * @return string|null
+     * @deprecated
      */
     public function getAmountUnits(): ?string
     {
@@ -106,6 +107,7 @@ class Transaction extends AbstractModel
     /**
      * @param string|null $amountUnits
      * @return $this
+     * @deprecated
      */
     public function setAmountUnits(?string $amountUnits): Transaction
     {

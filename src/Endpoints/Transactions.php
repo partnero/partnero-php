@@ -6,10 +6,10 @@ namespace Partnero\Endpoints;
 
 use JsonException;
 use Partnero\Exceptions\RequestException;
-use Partnero\Models\Partner as PartnerModel;
+use Partnero\Models\Partner;
 use Psr\Http\Client\ClientExceptionInterface;
-use Partnero\Models\Customer as CustomerModel;
-use Partnero\Models\Transaction as TransactionModel;
+use Partnero\Models\Customer;
+use Partnero\Models\Transaction;
 
 class Transactions extends AbstractEndpoint
 {
@@ -22,18 +22,18 @@ class Transactions extends AbstractEndpoint
     }
 
     /**
-     * @param array|TransactionModel $transaction
-     * @param array|CustomerModel $customer
-     * @param array|PartnerModel|null $partner
+     * @param array|Transaction $transaction
+     * @param array|Customer $customer
+     * @param array|Partner|null $partner
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
     public function create(
-        array|TransactionModel $transaction,
-        array|CustomerModel $customer,
-        array|PartnerModel $partner = null
+        array|Transaction $transaction,
+        array|Customer $customer,
+        array|Partner $partner = null
     ): array {
         $transaction = $this->modelData($transaction);
         $transaction['customer'] = $this->modelData($customer);
@@ -46,30 +46,18 @@ class Transactions extends AbstractEndpoint
     }
 
     /**
-     * @param string|TransactionModel|null $key
-     * @param int|null $id
+     * @param string|Transaction $key
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function delete(string|TransactionModel $key = null, int $id = null): array
+    public function delete(string|Transaction $key): array
     {
-        $params = [];
-
-        if (!is_null($key)) {
-            $keyValue = (string)$key;
-            if (!empty($keyValue)) {
-                $params['key'] = $keyValue;
-            }
-        }
-
-        if (!is_null($id)) {
-            $params['id'] = $id;
-        } elseif ($key instanceof TransactionModel && !is_null($key->getId())) {
-            $params['id'] = $key->getId();
-        }
-        
-        return $this->call('delete', $params);
+        return $this->call(
+            'delete',
+            ['key' => (string)$key,],
+            $this->getEndpointUri() . '/' . $key
+        );
     }
 }

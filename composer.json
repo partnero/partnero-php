@@ -1,34 +1,36 @@
 {
-    "name": "partnero/partnero-php",
-    "description": "Partnero PHP SDK",
-    "type": "library",
-    "license": "MIT",
-    "homepage": "https://partnero.com",
-    "keywords": ["Partnero"],
-    "authors": [
-        {
-            "name": "Partnero",
-            "email": "info@partnero.com",
-            "homepage": "https://partnero.com"
-        }
-    ],
-    "require": {
-        "ext-json": "*",
-        "php": "^7.4|^8.0",
-        "php-http/discovery": "^1.14.1",
-        "php-http/client-common": "^2.5.0"
-    },
-    "require-dev": {
-        "guzzlehttp/guzzle": "^7.4.1",
-        "phpunit/phpunit": "^7.5.15 || ^8.4 || ^9.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Partnero\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {}
-    },
-    "scripts": {}
+  "name": "partnero/partnero-php",
+  "description": "Partnero PHP SDK",
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://partnero.com",
+  "keywords": [
+    "Partnero"
+  ],
+  "authors": [
+    {
+      "name": "Partnero",
+      "email": "info@partnero.com",
+      "homepage": "https://partnero.com"
+    }
+  ],
+  "require": {
+    "ext-json": "*",
+    "php": "^8.0",
+    "php-http/discovery": "^1.14.1",
+    "php-http/client-common": "^2.5.0"
+  },
+  "require-dev": {
+    "guzzlehttp/guzzle": "^7.4.1",
+    "phpunit/phpunit": "^7.5.15 || ^8.4 || ^9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Partnero\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {}
+  },
+  "scripts": {}
 }

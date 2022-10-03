@@ -11,6 +11,9 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Partnero\Models\Customer as CustomerModel;
 use Partnero\Models\Transaction as TransactionModel;
 
+/**
+ * @deprecated use \Partnero\Endpoints\Customers
+ */
 class Customer extends AbstractEndpoint
 {
     /**
@@ -29,6 +32,7 @@ class Customer extends AbstractEndpoint
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
+     * @deprecated use \Partnero\Endpoints\Customers::create
      */
     public function create(
         array|CustomerModel $customer,
@@ -53,6 +57,7 @@ class Customer extends AbstractEndpoint
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
+     * @deprecated use \Partnero\Endpoints\Customers::find
      */
     public function get(string|CustomerModel $key): array
     {
@@ -68,6 +73,7 @@ class Customer extends AbstractEndpoint
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
+     * @deprecated use \Partnero\Endpoints\Customers::update
      */
     public function update(string|CustomerModel $key, array|CustomerModel $customer): array
     {
@@ -83,6 +89,7 @@ class Customer extends AbstractEndpoint
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
+     * @deprecated use \Partnero\Endpoints\Customers::delete
      */
     public function delete(string|CustomerModel $key): array
     {

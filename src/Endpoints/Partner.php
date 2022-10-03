@@ -9,6 +9,9 @@ use Partnero\Exceptions\RequestException;
 use Partnero\Models\Partner as PartnerModel;
 use Psr\Http\Client\ClientExceptionInterface;
 
+/**
+ * @deprecated should use \Partnero\Endpoints\Partners
+ */
 class Partner extends AbstractEndpoint
 {
     /**
@@ -25,6 +28,7 @@ class Partner extends AbstractEndpoint
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
+     * @deprecated use \Partnero\Endpoints\Partners::create
      */
     public function create(array|PartnerModel $partner): array
     {
@@ -38,6 +42,7 @@ class Partner extends AbstractEndpoint
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
+     * @deprecated use \Partnero\Endpoints\Partners::find
      */
     public function get(string|PartnerModel $key = null, string $email = null): array
     {
@@ -51,6 +56,7 @@ class Partner extends AbstractEndpoint
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
+     * @deprecated use \Partnero\Endpoints\Partners::update
      */
     public function update(string|PartnerModel $key, array|PartnerModel $partner): array
     {
@@ -67,6 +73,7 @@ class Partner extends AbstractEndpoint
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
+     * @deprecated use \Partnero\Endpoints\Partners::delete
      */
     public function delete(string|PartnerModel $key = null, string $email = null): array
     {

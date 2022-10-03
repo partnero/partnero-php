@@ -127,6 +127,7 @@ class Partnero
 
     /**
      * @return Customer
+     * @deprecated use customers
      */
     public function customer(): Customer
     {
@@ -151,6 +152,7 @@ class Partnero
 
     /**
      * @return Partner
+     * @deprecated use partners
      */
     public function partner(): Partner
     {
