@@ -41,8 +41,8 @@ class Partnero
      * @var array
      */
     protected static array $defaultOptions = [
-        self::OPTION_HOST => 'app.partnero.com',
-        self::OPTION_API_PATH => 'api/v1',
+        self::OPTION_HOST => 'api.partnero.com',
+        self::OPTION_API_PATH => 'v1',
         self::OPTION_PROTOCOL => 'https',
     ];
 
