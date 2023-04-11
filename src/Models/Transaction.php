@@ -137,7 +137,7 @@ class Transaction extends AbstractModel
 
     /**
      * @return string|null
-     * @deprecated use getAmountUnits()
+     * @deprecated
      */
     public function getRewardUnits(): ?string
     {
@@ -147,7 +147,7 @@ class Transaction extends AbstractModel
     /**
      * @param string|null $rewardUnits
      * @return $this
-     * @deprecated use setAmountUnits()
+     * @deprecated
      */
     public function setRewardUnits(?string $rewardUnits): Transaction
     {
@@ -220,8 +220,7 @@ class Transaction extends AbstractModel
             'action' => $this->getAction(),
             'status' => $this->getStatus(),
             'rewarded' => $this->getRewarded(),
-            'rewardable' => $this->getRewardable(),
-            'amount_units' => $this->getAmountUnits(),
+            'rewardable' => $this->getRewardable()
         ];
     }
 

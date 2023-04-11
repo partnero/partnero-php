@@ -6,17 +6,15 @@ namespace Partnero;
 
 use Partnero\Http\HttpLayer;
 use Partnero\Endpoints\Test;
-use Partnero\Endpoints\Partner;
 use Partnero\Endpoints\Partners;
-use Partnero\Endpoints\Customer;
 use Partnero\Endpoints\Customers;
 use Partnero\Endpoints\Settings;
 use Partnero\Endpoints\Transactions;
-use Partnero\Endpoints\AbstractEndpoint;
 
 class Partnero
 {
     public const API_VERSION = 'v1';
+    public const SDK_VERSION = 'v1.0.10';
 
     public const OPTION_HOST = 'host';
     public const OPTION_API_PATH = 'api_path';
@@ -47,39 +45,29 @@ class Partnero
     ];
 
     /**
-     * @var AbstractEndpoint|null
+     * @var Test|null
      */
-    protected ?AbstractEndpoint $test = null;
+    protected ?Test $test = null;
 
     /**
-     * @var AbstractEndpoint|null
+     * @var Customers|null
      */
-    protected ?AbstractEndpoint $customer = null;
+    protected ?Customers $customers = null;
 
     /**
-     * @var AbstractEndpoint|null
+     * @var Partners|null
      */
-    protected ?AbstractEndpoint $customers = null;
+    protected ?Partners $partners = null;
 
     /**
-     * @var AbstractEndpoint|null
+     * @var Settings|null
      */
-    protected ?AbstractEndpoint $partner = null;
+    protected ?Settings $settings = null;
 
     /**
-     * @var AbstractEndpoint|null
+     * @var Transactions|null
      */
-    protected ?AbstractEndpoint $partners = null;
-
-    /**
-     * @var AbstractEndpoint|null
-     */
-    protected ?AbstractEndpoint $settings = null;
-
-    /**
-     * @var AbstractEndpoint|null
-     */
-    protected ?AbstractEndpoint $transactions = null;
+    protected ?Transactions $transactions = null;
 
     /**
      * @param string $apiKey
@@ -126,19 +114,6 @@ class Partnero
     }
 
     /**
-     * @return Customer
-     * @deprecated use customers
-     */
-    public function customer(): Customer
-    {
-        if (empty($this->customer)) {
-            $this->customer = new Customer($this->httpLayer, $this->options);
-        }
-
-        return $this->customer;
-    }
-
-    /**
      * @return Customers
      */
     public function customers(): Customers
@@ -148,19 +123,6 @@ class Partnero
         }
 
         return $this->customers;
-    }
-
-    /**
-     * @return Partner
-     * @deprecated use partners
-     */
-    public function partner(): Partner
-    {
-        if (empty($this->partner)) {
-            $this->partner = new Partner($this->httpLayer, $this->options);
-        }
-
-        return $this->partner;
     }
 
     /**

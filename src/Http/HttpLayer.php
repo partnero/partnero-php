@@ -179,7 +179,8 @@ class HttpLayer
         $headerDefaultsPlugin = new HeaderDefaultsPlugin(
             [
                 'Accept' => 'application/json',
-                'User-Agent' => 'partnero-php/' . Partnero::API_VERSION
+                'User-Agent' => 'partnero-php/' . Partnero::API_VERSION,
+                'Sdk-Version' => Partnero::SDK_VERSION
             ]
         );
 
