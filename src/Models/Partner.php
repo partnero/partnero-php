@@ -32,11 +32,6 @@ class Partner extends AbstractModel
     protected ?string $password = null;
 
     /**
-     * @var bool|null
-     */
-    protected ?bool $createIfNotExists = null;
-
-    /**
      * @return string|null
      */
     public function getKey(): ?string
@@ -127,24 +122,6 @@ class Partner extends AbstractModel
     }
 
     /**
-     * @return bool|null
-     */
-    public function getCreateIfNotExist(): ?bool
-    {
-        return $this->createIfNotExists;
-    }
-
-    /**
-     * @param bool|null $createIfNotExists
-     * @return $this
-     */
-    public function setCreateIfNotExist(?bool $createIfNotExists): Partner
-    {
-        $this->createIfNotExists = $createIfNotExists;
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function __toArray(): array
@@ -155,7 +132,6 @@ class Partner extends AbstractModel
             'name' => $this->getName(),
             'surname' => $this->getSurname(),
             'password' => $this->getPassword(),
-            'create_if_not_exist' => $this->getCreateIfNotExist(),
         ];
     }
 
