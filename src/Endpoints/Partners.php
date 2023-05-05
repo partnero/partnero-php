@@ -38,43 +38,38 @@ class Partners extends AbstractEndpoint
     }
 
     /**
-     * @param string|Partner|null $key
-     * @param string|null $email
+     * @param Partner $key
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function find(string|Partner $key = null, string $email = null): array
+    public function find(Partner $key): array
     {
-        return $this->call(
-            'get',
-            self::keyOrEmailSearchParams($key, $email),
-            $this->getEndpointUri() . '/' . $key
-        );
+        return $this->call('get', self::keyOrEmailSearchParams($key), $this->getEndpointUri() . '/' . $key);
     }
 
     /**
-     * @param array|Partner $partner
+     * @param Partner $partner
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function create(array|Partner $partner): array
+    public function create(Partner $partner): array
     {
         return $this->call('post', $this->modelData($partner));
     }
 
     /**
-     * @param string|Partner $key
-     * @param array|Partner $partner
+     * @param Partner $key
+     * @param Partner $partner
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function update(string|Partner $key, array|Partner $partner): array
+    public function update(Partner $key, Partner $partner): array
     {
         return $this->call(
             'put',
@@ -86,24 +81,22 @@ class Partners extends AbstractEndpoint
     }
 
     /**
-     * @param string|Partner|null $key
-     * @param string|null $email
+     * @param Partner $key
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function delete(string|null|Partner $key = null, string $email = null): array
+    public function delete(Partner $key): array
     {
-        return $this->call('delete', self::keyOrEmailSearchParams($key, $email));
+        return $this->call('delete', self::keyOrEmailSearchParams($key));
     }
 
     /**
      * @param string|Partner|null $key
-     * @param string|null $email
      * @return array
      */
-    public static function keyOrEmailSearchParams(string|null|Partner $key = null, ?string $email = null): array
+    public static function keyOrEmailSearchParams(string|null|Partner $key = null): array
     {
         $params = [];
 
@@ -115,8 +108,6 @@ class Partners extends AbstractEndpoint
             } elseif (!is_null($key->getEmail())) {
                 $params['email'] = $key->getEmail();
             }
-        } elseif (!empty($email)) {
-            $params['email'] = $email;
         }
 
         return $params;

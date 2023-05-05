@@ -18,7 +18,8 @@
     "ext-json": "*",
     "php": "^8.0",
     "php-http/discovery": "^1.14.1",
-    "php-http/client-common": "^2.5.0"
+    "php-http/client-common": "^2.5.0",
+    "ext-mbstring": "*"
   },
   "require-dev": {
     "guzzlehttp/guzzle": "^7.4.1",

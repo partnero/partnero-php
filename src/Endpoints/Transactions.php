@@ -6,7 +6,6 @@ namespace Partnero\Endpoints;
 
 use JsonException;
 use Partnero\Exceptions\RequestException;
-use Partnero\Models\Partner;
 use Psr\Http\Client\ClientExceptionInterface;
 use Partnero\Models\Customer;
 use Partnero\Models\Transaction;
@@ -22,42 +21,30 @@ class Transactions extends AbstractEndpoint
     }
 
     /**
-     * @param array|Transaction $transaction
-     * @param array|Customer $customer
-     * @param array|Partner|null $partner
+     * @param Transaction $transaction
+     * @param Customer $customer
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function create(
-        array|Transaction $transaction,
-        array|Customer $customer,
-        array|Partner $partner = null
-    ): array {
-        $transaction = $this->modelData($transaction);
-        $transaction['customer'] = $this->modelData($customer);
+    public function create(Transaction $transaction, Customer $customer): array
+    {
+        $params = $this->modelData($transaction);
+        $params['customer'] = $this->modelData($customer);
 
-        if (!empty($partner)) {
-            $transaction['partner'] = $this->modelData($partner);
-        }
-
-        return $this->call('post', $this->modelData($transaction));
+        return $this->call('post', $this->modelData($params));
     }
 
     /**
-     * @param string|Transaction $key
+     * @param Transaction $key
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function delete(string|Transaction $key): array
+    public function delete(Transaction $key): array
     {
-        return $this->call(
-            'delete',
-            ['key' => (string)$key,],
-            $this->getEndpointUri() . '/' . $key
-        );
+        return $this->call('delete', ['key' => (string)$key,], $this->getEndpointUri() . '/' . $key);
     }
 }
