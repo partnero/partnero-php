@@ -65,20 +65,6 @@ class HttpLayer
 
     /**
      * @param string $uri
-     * @param array|null $body
-     * @return string
-     */
-    protected function buildUriBody(string $uri, ?array $body = null): string
-    {
-        if (!empty($body)) {
-            $uri .= (str_contains($uri, '?') ? '&' : '?') . http_build_query($body);
-        }
-
-        return $uri;
-    }
-
-    /**
-     * @param string $uri
      * @param array $body
      * @return array
      * @throws ClientExceptionInterface
@@ -86,7 +72,7 @@ class HttpLayer
      */
     public function get(string $uri, array $body = []): array
     {
-        return $this->call_method('GET', $this->buildUriBody($uri, $body));
+        return $this->call_method('GET', $uri, $body);
     }
 
     /**
@@ -122,28 +108,22 @@ class HttpLayer
      */
     public function delete(string $uri, array $body = []): array
     {
-        return $this->call_method('DELETE', $this->buildUriBody($uri, $body));
+        return $this->call_method('DELETE', $uri, $body);
     }
 
     /**
      * @param string $method
      * @param string $uri
-     * @param array|null $body
+     * @param array $body
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      */
-    protected function call_method(string $method, string $uri, ?array $body = null): array
+    protected function call_method(string $method, string $uri, array $body): array
     {
-        $request = $this->requestFactory->createRequest($method, $uri);
-
-        if (!is_null($body)) {
-            $request = $request->withBody($this->buildBody($body));
-        }
-
         return $this->buildResponse(
             $this->pluginClient->sendRequest(
-                $request
+                $this->requestFactory->createRequest($method, $uri)->withBody($this->buildBody($body))
             )
         );
     }
