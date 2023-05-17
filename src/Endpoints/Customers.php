@@ -6,10 +6,9 @@ namespace Partnero\Endpoints;
 
 use JsonException;
 use Partnero\Exceptions\RequestException;
-use Partnero\Models\BalanceCredit;
 use Partnero\Models\Customer;
 use Partnero\Models\Partner;
-use Partnero\Models\Transaction as TransactionModel;
+use Partnero\Models\Transaction;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class Customers extends AbstractEndpoint
@@ -47,8 +46,8 @@ class Customers extends AbstractEndpoint
 
     /**
      * @param array|Customer $customer
-     * @param array|Partner|Customer|null $partnerOrCustomer
-     * @param array|TransactionModel|null $transaction
+     * @param array|Partner $partner
+     * @param array|Transaction|null $transaction
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
@@ -56,18 +55,13 @@ class Customers extends AbstractEndpoint
      */
     public function create(
         array|Customer $customer,
-        array|Partner|Customer $partnerOrCustomer = null,
-        array|TransactionModel $transaction = null
+        array|Partner $partner,
+        array|Transaction $transaction = null
     ): array {
-        $data = $this->modelData($customer);
-
-        if ($partnerOrCustomer instanceof Partner) {
-            $data['partner'] = $this->modelData($partnerOrCustomer);
-        }
-
-        if ($partnerOrCustomer instanceof Customer) {
-            $data['referring_customer'] = $this->modelData($partnerOrCustomer);
-        }
+        $data = [
+            'customer' => $this->modelData($customer),
+            'partner' => $this->modelData($partner)
+        ];
 
         if (!empty($transaction)) {
             $data['transaction'] = $this->modelData($transaction);
@@ -121,39 +115,6 @@ class Customers extends AbstractEndpoint
             'delete',
             [],
             $this->getEndpointUri() . '/' . $key
-        );
-    }
-
-    /**
-     * @param string|Customer $key
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws JsonException
-     * @throws RequestException
-     */
-    public function balance(string|Customer $key): array
-    {
-        return $this->call(
-            'get',
-            [],
-            $this->getEndpointUri() . '/' . $key . '/balance'
-        );
-    }
-
-    /**
-     * @param string|Customer $key
-     * @param array|BalanceCredit $credit
-     * @return array
-     * @throws ClientExceptionInterface
-     * @throws JsonException
-     * @throws RequestException
-     */
-    public function credit(string|Customer $key, array|BalanceCredit $credit): array
-    {
-        return $this->call(
-            'post',
-            $this->modelData($credit),
-            $this->getEndpointUri() . '/' . $key . '/balance/credit'
         );
     }
 }

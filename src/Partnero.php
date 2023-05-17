@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Partnero;
 
+use Partnero\Endpoints\Customer;
 use Partnero\Http\HttpLayer;
 use Partnero\Endpoints\Test;
 use Partnero\Endpoints\Partners;
@@ -14,7 +15,7 @@ use Partnero\Endpoints\Transactions;
 class Partnero
 {
     public const API_VERSION = 'v1';
-    public const SDK_VERSION = 'v1.0.15';
+    public const SDK_VERSION = 'v1.0.16';
 
     public const OPTION_HOST = 'host';
     public const OPTION_API_PATH = 'api_path';
@@ -48,6 +49,11 @@ class Partnero
      * @var Test|null
      */
     protected ?Test $test = null;
+
+    /**
+     * @var Customer|null
+     */
+    protected ?Customer $customer = null;
 
     /**
      * @var Customers|null
@@ -126,9 +132,34 @@ class Partnero
     }
 
     /**
+     * @return Customer
+     * @deprecated
+     */
+    public function customer(): Customer
+    {
+        if (empty($this->customer)) {
+            $this->customer = new Customer($this->httpLayer, $this->options);
+        }
+
+        return $this->customer;
+    }
+
+    /**
      * @return Partners
      */
     public function partners(): Partners
+    {
+        if (empty($this->partners)) {
+            $this->partners = new Partners($this->httpLayer, $this->options);
+        }
+
+        return $this->partners;
+    }
+
+    /**
+     * @return Partners
+     */
+    public function partner(): Partners
     {
         if (empty($this->partners)) {
             $this->partners = new Partners($this->httpLayer, $this->options);
