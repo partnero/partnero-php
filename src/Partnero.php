@@ -15,7 +15,7 @@ use Partnero\Endpoints\Transactions;
 class Partnero
 {
     public const API_VERSION = 'v1';
-    public const SDK_VERSION = 'v1.0.16';
+    public const SDK_VERSION = 'v1.0.17';
 
     public const OPTION_HOST = 'host';
     public const OPTION_API_PATH = 'api_path';

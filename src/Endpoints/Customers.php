@@ -58,10 +58,8 @@ class Customers extends AbstractEndpoint
         array|Partner $partner,
         array|Transaction $transaction = null
     ): array {
-        $data = [
-            'customer' => $this->modelData($customer),
-            'partner' => $this->modelData($partner)
-        ];
+        $data = $this->modelData($customer);
+        $data['partner'] = $this->modelData($partner);
 
         if (!empty($transaction)) {
             $data['transaction'] = $this->modelData($transaction);
