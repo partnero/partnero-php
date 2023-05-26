@@ -215,8 +215,34 @@ $partnero->customers()->delete('new-customer-key');
 <a name="create-transcation"></a>
 ### Create transaction
 
+```php
+use Partnero\Partnero;
+use Partnero\Models\Customer;
+use Partnero\Models\Transaction;
+
+$partnero = new Partnero("api_key");
+
+$customer = (new Customer())
+  ->setKey('customer-key');
+
+$transaction = (new Transaction())
+  ->setKey('transaction_123')
+  ->setAmount(99.99)
+  ->setAction('sale');
+
+$partnero->transactions()->create($transaction, $customer);
+```
+
 <a name="delete-transcation"></a>
 ### Delete transaction
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero("api_key");
+
+$partnero->transactions()->delete(key: 'transaction_123');
+```
 
 <a name="support-and-feedback"></a>
 # Support and Feedback
