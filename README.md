@@ -18,11 +18,11 @@ Partnero PHP SDK
     * [Create customer](#create-customer)
     * [Update customer](#update-customer)
     * [Delete customer](#delete-customer)
-  * [Settings API](#settings)
-    * [Update setting](#update-setting)
   * [Transactions API](#transactions)
     * [Create transaction](#create-transaction)
     * [Delete transaction](#delete-transaction)
+  * [Settings API](#settings)
+     * [Update setting](#update-setting)
 * [Support and Feedback](#support-and-feedback)
 
 
@@ -57,9 +57,9 @@ composer require partnero/partnero-php
 ```php
 use Partnero\Partnero;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
-$partnero->partners()->list(limit: 10);
+$partnero->partners()->list(10);
 ```
 
 <a name="get-partner"></a>
@@ -68,9 +68,9 @@ $partnero->partners()->list(limit: 10);
 ```php
 use Partnero\Partnero;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
-$partnero->partners()->find(key: 'partner-key');
+$partnero->partners()->find('partner-key');
 ```
 
 <a name="create-partner"></a>
@@ -80,13 +80,12 @@ $partnero->partners()->find(key: 'partner-key');
 use Partnero\Partnero;
 use Partnero\Models\Partner;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
 $partner = (new Partner())
   ->setEmail('test@mail.com')
-  ->setName("Name")
-  ->setSurname("Surname")
-  ->setKey("partner-key");
+  ->setName('Name')
+  ->setKey('partner-key');
 
 $partnero->partners()->create($partner);
 ```
@@ -101,15 +100,15 @@ If key is not set, a random key will be generated for the partner.
 use Partnero\Partnero;
 use Partnero\Models\Partner;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
 $partner = (new Partner())
   ->setEmail('john.doe@mail.com')
-  ->setName("John")
-  ->setSurname("Doe")
-  ->setKey("john-doe");
+  ->setName('John')
+  ->setSurname('Doe')
+  ->setKey('john-doe');
 
-$partnero->partners()->update(key: 'partner-key', partner: $partner);
+$partnero->partners()->update('partner-key', $partner);
 ```
 
 <a name="delete-partner"></a>
@@ -118,9 +117,9 @@ $partnero->partners()->update(key: 'partner-key', partner: $partner);
 ```php
 use Partnero\Partnero;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
-$partnero->partners()->delete(key: 'john-doe');
+$partnero->partners()->delete('john-doe');
 ```
 
 <a name="customer-api"></a>
@@ -133,12 +132,12 @@ $partnero->partners()->delete(key: 'john-doe');
 use Partnero\Partnero;
 use Partnero\Models\Partner;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
 $partner = (new Partner())
     ->setKey('partner-key');
 
-$partnero->customers()->list(limit: 10, partner: $partner);
+$partnero->customers()->list(10, $partner);
 ```
 
 <a name="get-customer"></a>
@@ -147,7 +146,7 @@ $partnero->customers()->list(limit: 10, partner: $partner);
 ```php
 use Partnero\Partnero;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
 $partnero->customers()->find('customer-key');
 ```
@@ -160,15 +159,15 @@ use Partnero\Partnero;
 use Partnero\Models\Partner;
 use Partnero\Models\Customer;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
 $partner = new Partner();
 $partner->setKey('partner-key');
 
 $customer = (new Customer())
-  ->setKey("customer-key")
-  ->setName("Name")
-  ->setSurname("Surname")
+  ->setKey('customer-key')
+  ->setName('Name')
+  ->setSurname('Surname')
   ->setEmail('customer@mail.com');
 
 $partnero->customers()->create($customer, $partner);
@@ -181,15 +180,15 @@ $partnero->customers()->create($customer, $partner);
 use Partnero\Partnero;
 use Partnero\Models\Customer;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
 $customer = (new Customer())
-  ->setKey("new-customer-key")
-  ->setName("John")
-  ->setSurname("Doe")
+  ->setKey('new-customer-key')
+  ->setName('John')
+  ->setSurname('Doe')
   ->setEmail('customer.john.doe@mail.com');
 
-$partnero->customers()->update(key: 'customer-key', customer: $customer);
+$partnero->customers()->update('customer-key', $customer);
 ```
 
 <a name="delete-customer"></a>
@@ -198,16 +197,10 @@ $partnero->customers()->update(key: 'customer-key', customer: $customer);
 ```php
 use Partnero\Partnero;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
 $partnero->customers()->delete('new-customer-key');
 ```
-
-<a name="settings-api"></a>
-## Settings
-
-<a name="update-setting"></a>
-### Update setting
 
 <a name="transactions-api"></a>
 ## Transactions
@@ -220,7 +213,7 @@ use Partnero\Partnero;
 use Partnero\Models\Customer;
 use Partnero\Models\Transaction;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
 $customer = (new Customer())
   ->setKey('customer-key');
@@ -239,10 +232,16 @@ $partnero->transactions()->create($transaction, $customer);
 ```php
 use Partnero\Partnero;
 
-$partnero = new Partnero("api_key");
+$partnero = new Partnero('api_key');
 
-$partnero->transactions()->delete(key: 'transaction_123');
+$partnero->transactions()->delete('transaction_123');
 ```
+
+<a name="settings-api"></a>
+## Settings
+
+<a name="update-setting"></a>
+### Update setting
 
 <a name="support-and-feedback"></a>
 # Support and Feedback
