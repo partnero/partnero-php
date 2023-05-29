@@ -80,13 +80,12 @@ $partnero = new Partnero('api_key');
 $partner = (new Partner())
   ->setEmail('test@mail.com')
   ->setName('Name')
-  ->setSurname('Surname')
   ->setKey('partner-key');
 
 $partnero->partners()->create($partner);
 ```
 
-Surname and Key are optional.  
+Key is optional.  
 If key is not set, a random key will be generated for the partner.
 
 <a name="update-partner"></a>
@@ -101,7 +100,6 @@ $partnero = new Partnero('api_key');
 $partner = (new Partner())
   ->setEmail('john.doe@mail.com')
   ->setName('John')
-  ->setSurname('Doe')
   ->setKey('john-doe');
 
 $partnero->partners()->update('partner-key', $partner);
@@ -180,7 +178,6 @@ $partnero = new Partnero('api_key');
 $customer = (new Customer())
   ->setKey('new-customer-key')
   ->setName('John')
-  ->setSurname('Doe')
   ->setEmail('customer.john.doe@mail.com');
 
 $partnero->customers()->update('customer-key', $customer);
