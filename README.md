@@ -21,12 +21,7 @@ Partnero PHP SDK
   * [Transactions API](#transactions)
     * [Create transaction](#create-transaction)
     * [Delete transaction](#delete-transaction)
-  * [Settings API](#settings)
-     * [Update setting](#update-setting)
 * [Support and Feedback](#support-and-feedback)
-
-
-
 
 # Installation
 
@@ -85,6 +80,7 @@ $partnero = new Partnero('api_key');
 $partner = (new Partner())
   ->setEmail('test@mail.com')
   ->setName('Name')
+  ->setSurname('Surname')
   ->setKey('partner-key');
 
 $partnero->partners()->create($partner);
@@ -135,7 +131,7 @@ use Partnero\Models\Partner;
 $partnero = new Partnero('api_key');
 
 $partner = (new Partner())
-    ->setKey('partner-key');
+  ->setKey('partner-key');
 
 $partnero->customers()->list(10, $partner);
 ```
@@ -167,7 +163,6 @@ $partner->setKey('partner-key');
 $customer = (new Customer())
   ->setKey('customer-key')
   ->setName('Name')
-  ->setSurname('Surname')
   ->setEmail('customer@mail.com');
 
 $partnero->customers()->create($customer, $partner);
@@ -236,12 +231,6 @@ $partnero = new Partnero('api_key');
 
 $partnero->transactions()->delete('transaction_123');
 ```
-
-<a name="settings-api"></a>
-## Settings
-
-<a name="update-setting"></a>
-### Update setting
 
 <a name="support-and-feedback"></a>
 # Support and Feedback
