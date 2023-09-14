@@ -11,6 +11,7 @@ use Partnero\Endpoints\Partners;
 use Partnero\Endpoints\Customers;
 use Partnero\Endpoints\Settings;
 use Partnero\Endpoints\Transactions;
+use Partnero\Endpoints\Webhooks;
 
 class Partnero
 {
@@ -74,6 +75,11 @@ class Partnero
      * @var Transactions|null
      */
     protected ?Transactions $transactions = null;
+
+    /**
+     * @var Webhooks|null
+     */
+    protected ?Webhooks $webhooks = null;
 
     /**
      * @param string $apiKey
@@ -190,5 +196,17 @@ class Partnero
         }
 
         return $this->settings;
+    }
+
+    /**
+     * @return Webhooks
+     */
+    public function webhooks(): Webhooks
+    {
+        if (empty($this->webhooks)) {
+            $this->webhooks = new Webhooks($this->httpLayer, $this->options);
+        }
+
+        return $this->webhooks;
     }
 }
