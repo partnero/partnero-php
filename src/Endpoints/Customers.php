@@ -115,4 +115,22 @@ class Customers extends AbstractEndpoint
             $this->getEndpointUri() . '/' . $key
         );
     }
+
+    /**
+     * @param array|Customer $customer
+     * @param array|null $personalization
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws JsonException
+     * @throws RequestException
+     */
+    public function invite(array|Customer $customer, ?array $personalization = null): array
+    {
+        $data = $this->modelData($customer);
+        if(!empty($personalization)) {
+            $data['personalization'] = $personalization;
+        }
+
+        return $this->call('post', $data, $this->getEndpointUri() . ':invite');
+    }
 }
