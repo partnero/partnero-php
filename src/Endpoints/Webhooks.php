@@ -49,7 +49,7 @@ class Webhooks extends AbstractEndpoint
         return $this->call(
             'get',
             [],
-            $this->getEndpointUri() . '/' . $this->getKeyUri($key)
+            $this->getEndpointUri() . '/' . $key
         );
     }
 
@@ -78,7 +78,7 @@ class Webhooks extends AbstractEndpoint
         return $this->call(
             'put',
             $this->modelData($webhook),
-            $this->getEndpointUri() . '/' . $this->getKeyUri($key)
+            $this->getEndpointUri() . '/' . $key
         );
     }
 
@@ -94,19 +94,7 @@ class Webhooks extends AbstractEndpoint
         return $this->call(
             'delete',
             [],
-            $this->getEndpointUri() . '/' . $this->getKeyUri($key)
+            $this->getEndpointUri() . '/' . $key
         );
-    }
-
-    /**
-     * @param  string|Webhook $key
-     * @return string
-     */
-    protected function getKeyUri(string|Webhook $key): string
-    {
-        if($key instanceof Webhook) {
-            $key = $key->getKey();
-        }
-        return $key;
     }
 }

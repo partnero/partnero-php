@@ -140,6 +140,6 @@ class Webhook extends AbstractModel
      */
     public function __toString(): string
     {
-        return '';
+        return (string)$this->getKey();
     }
 }
