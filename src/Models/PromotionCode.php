@@ -7,6 +7,11 @@ namespace Partnero\Models;
 class PromotionCode extends AbstractModel
 {
     /**
+     * @var int|null
+     */
+    protected ?int $id = null;
+
+    /**
      * @var string|null
      */
     protected ?string $code = null;
@@ -22,9 +27,19 @@ class PromotionCode extends AbstractModel
     protected ?bool $limitToSpecificPartner = null;
 
     /**
+     * @var array|null
+     */
+    protected ?array $couponSpecificPartners = null;
+
+    /**
      * @var bool|null
      */
     protected ?bool $limitToSpecificCustomer = null;
+
+    /**
+     * @var array|null
+     */
+    protected ?array $couponSpecificCustomers = null;
 
     /**
      * @var bool|null
@@ -55,6 +70,24 @@ class PromotionCode extends AbstractModel
      * @var int|null
      */
     protected ?int $redemptionTimesValue = null;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): int|null
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param  int|null $id
+     * @return $this
+     */
+    public function setId(int|null $id): PromotionCode
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return string|null
@@ -111,6 +144,24 @@ class PromotionCode extends AbstractModel
     }
 
     /**
+     * @return array|null
+     */
+    public function getCouponSpecificPartners(): ?array
+    {
+        return $this->couponSpecificPartners;
+    }
+
+    /**
+     * @param  array|null $couponSpecificPartners
+     * @return $this
+     */
+    public function setCouponSpecificPartners(?array $couponSpecificPartners): PromotionCode
+    {
+        $this->couponSpecificPartners = $couponSpecificPartners;
+        return $this;
+    }
+
+    /**
      * @return bool|null
      */
     public function getLimitToSpecificCustomer(): ?bool
@@ -125,6 +176,24 @@ class PromotionCode extends AbstractModel
     public function setLimitToSpecificCustomer(?bool $limitToSpecificCustomer): PromotionCode
     {
         $this->limitToSpecificCustomer = $limitToSpecificCustomer;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getCouponSpecificCustomers(): ?array
+    {
+        return $this->couponSpecificCustomers;
+    }
+
+    /**
+     * @param  array|null $couponSpecificCustomers
+     * @return $this
+     */
+    public function setCouponSpecificCustomers(?array $couponSpecificCustomers): PromotionCode
+    {
+        $this->couponSpecificCustomers = $couponSpecificCustomers;
         return $this;
     }
 
@@ -242,12 +311,13 @@ class PromotionCode extends AbstractModel
     public function __toArray(): array
     {
         return [
+            'id' => $this->getId(),
             'code' => $this->getCode(),
             'first_time_order' => $this->getFirstTimeOrder(),
             'limit_to_specific_partner' => $this->getLimitToSpecificPartner(),
-            'coupon_specific_partners',
+            'coupon_specific_partners' => $this->getCouponSpecificPartners(),
             'limit_to_specific_customer' => $this->getLimitToSpecificCustomer(),
-            'coupon_specific_customers',
+            'coupon_specific_customers' => $this->getCouponSpecificCustomers(),
             'minimum_order_status' => $this->getMinimumOrderStatus(),
             'minimum_order_value' => $this->getMinimumOrderValue(),
             'expiration_date_status' => $this->getExpirationDateStatus(),
@@ -262,6 +332,6 @@ class PromotionCode extends AbstractModel
      */
     public function __toString(): string
     {
-        return '';
+        return (string)$this->getCode();
     }
 }

@@ -7,6 +7,11 @@ namespace Partnero\Models;
 class Coupon extends AbstractModel
 {
     /**
+     * @var int|null
+     */
+    protected ?int $id = null;
+
+    /**
      * @var string|null
      */
     protected ?string $name = null;
@@ -60,6 +65,24 @@ class Coupon extends AbstractModel
      * @var int|null
      */
     protected ?int $redemptionTimesValue = null;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): int|null
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param  int|null $id
+     * @return $this
+     */
+    public function setId(int|null $id): Coupon
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return string|null
@@ -265,6 +288,7 @@ class Coupon extends AbstractModel
     public function __toArray(): array
     {
         return [
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'uuid_code' => $this->getUuidCode(),
             'active' => $this->getActive(),
@@ -276,7 +300,6 @@ class Coupon extends AbstractModel
             'redemption_specific_date_value' => $this->getRedemptionSpecificDateValue(),
             'redemption_times_status' => $this->getRedemptionTimesStatus(),
             'redemption_times_value' => $this->getRedemptionTimesValue(),
-            'promotion_codes',
         ];
     }
 
@@ -285,6 +308,6 @@ class Coupon extends AbstractModel
      */
     public function __toString(): string
     {
-        return '';
+        return (string)$this->getUuidCode();
     }
 }
