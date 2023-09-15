@@ -26,7 +26,7 @@ class Webhooks extends AbstractEndpoint
      * @throws RequestException
      * @throws ClientExceptionInterface
      */
-    public function list(int $limit = null): array
+    public function list(int|null $limit = null): array
     {
         $params = [];
 
@@ -38,13 +38,13 @@ class Webhooks extends AbstractEndpoint
     }
 
     /**
-     * @param  string|Webhook|null $key
+     * @param  string|Webhook $key
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function find(string|Webhook $key = null): array
+    public function find(string|Webhook $key): array
     {
         return $this->call(
             'get',
