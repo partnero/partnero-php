@@ -97,7 +97,6 @@ class Transaction extends AbstractModel
 
     /**
      * @return string|null
-     * @deprecated
      */
     public function getAmountUnits(): ?string
     {
@@ -217,6 +216,7 @@ class Transaction extends AbstractModel
         return [
             'key' => $this->getKey(),
             'amount' => $this->getAmount(),
+            'amount_units' => $this->getAmountUnits(),
             'action' => $this->getAction(),
             'status' => $this->getStatus(),
             'rewarded' => $this->getRewarded(),
