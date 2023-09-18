@@ -7,6 +7,11 @@ namespace Partnero\Models;
 class Customer extends AbstractModel
 {
     /**
+     * @var int|null
+     */
+    protected ?int $id = null;
+
+    /**
      * @var string|null
      */
     protected ?string $key = null;
@@ -25,6 +30,24 @@ class Customer extends AbstractModel
      * @var string|null
      */
     protected ?string $email = null;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): int|null
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param  int|null $id
+     * @return $this
+     */
+    public function setId(int|null $id): Customer
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     /**
      * @return string|null
@@ -104,6 +127,7 @@ class Customer extends AbstractModel
     public function __toArray(): array
     {
         return [
+            'id' => $this->getId(),
             'key' => $this->getKey(),
             'name' => $this->getName(),
             'surname' => $this->getSurname(),
