@@ -12,6 +12,9 @@ use Partnero\Endpoints\Customers;
 use Partnero\Endpoints\Settings;
 use Partnero\Endpoints\Transactions;
 use Partnero\Endpoints\Webhooks;
+use Partnero\Endpoints\Coupons;
+use Partnero\Endpoints\PromotionCodes;
+use Partnero\Endpoints\ReferralCustomers;
 
 class Partnero
 {
@@ -80,6 +83,21 @@ class Partnero
      * @var Webhooks|null
      */
     protected ?Webhooks $webhooks = null;
+
+    /**
+     * @var Coupons|null
+     */
+    protected ?Coupons $coupons = null;
+
+    /**
+     * @var PromotionCodes|null
+     */
+    protected ?PromotionCodes $promotionCodes = null;
+
+    /**
+     * @var ReferralCustomers|null
+     */
+    protected ?ReferralCustomers $referralCustomers = null;
 
     /**
      * @param string $apiKey
@@ -208,5 +226,41 @@ class Partnero
         }
 
         return $this->webhooks;
+    }
+
+    /**
+     * @return Coupons
+     */
+    public function coupons(): Coupons
+    {
+        if (empty($this->coupons)) {
+            $this->coupons = new Coupons($this->httpLayer, $this->options);
+        }
+
+        return $this->coupons;
+    }
+
+    /**
+     * @return PromotionCodes
+     */
+    public function promotionCodes(): PromotionCodes
+    {
+        if (empty($this->promotionCodes)) {
+            $this->promotionCodes = new PromotionCodes($this->httpLayer, $this->options);
+        }
+
+        return $this->promotionCodes;
+    }
+
+    /**
+     * @return ReferralCustomers
+     */
+    public function referralCustomers(): ReferralCustomers
+    {
+        if (empty($this->referralCustomers)) {
+            $this->referralCustomers = new ReferralCustomers($this->httpLayer, $this->options);
+        }
+
+        return $this->referralCustomers;
     }
 }
