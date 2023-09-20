@@ -21,6 +21,12 @@ Partnero PHP SDK
   * [Transactions API](#transactions)
     * [Create transaction](#create-transaction)
     * [Delete transaction](#delete-transaction)
+  * [Webhooks API](#webhooks)
+    * [Get a list of webhooks](#get-a-list-of-webhooks)
+    * [Get webhook](#get-webhook)
+    * [Create webhook](#create-webhook)
+    * [Update webhook](#update-webhook)
+    * [Delete webhook](#delete-webhook)
 * [Support and Feedback](#support-and-feedback)
 
 # Installation
@@ -227,6 +233,75 @@ use Partnero\Partnero;
 $partnero = new Partnero('api_key');
 
 $partnero->transactions()->delete('transaction_123');
+```
+
+<a name="webhooks"></a>
+## Webhooks
+
+<a name="get-a-list-of-webhooks"></a>
+### Get a list of webhooks
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->webhooks()->list(50, 1);
+```
+
+<a name="get-webhook"></a>
+### Get webhook
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->webhooks()->find('webhook-key');
+```
+
+<a name="create-webhook"></a>
+### Create webhook
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\Webhook;
+
+$partnero = new Partnero('api_key');
+
+$webhook = (new Webhook())
+  ->setName('Demo')
+  ->setUrl('https://webhook.site/e68d154a-ad82')
+  ->setEvents([
+    'partner.created'
+  ]);
+
+$partnero->webhooks()->create($webhook);
+```
+
+<a name="update-webhook"></a>
+### Update webhook
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\Webhook;
+
+$partnero = new Partnero('api_key');
+
+$webhook = (new Webhook())->setName('Demo 2');
+
+$partnero->webhooks()->update('webhook-key', $webhook);
+```
+
+<a name="delete-webhook"></a>
+### Delete webhook
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->webhooks()->delete('webhook-key');
 ```
 
 <a name="support-and-feedback"></a>
