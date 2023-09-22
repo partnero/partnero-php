@@ -170,6 +170,6 @@ class Partner extends AbstractModel
      */
     public function __toString(): string
     {
-        return (string)$this->getId();
+        return (string)$this->getKey();
     }
 }
