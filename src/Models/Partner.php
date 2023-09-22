@@ -7,6 +7,14 @@ namespace Partnero\Models;
 class Partner extends AbstractModel
 {
     /**
+     * @var int|null
+     */
+    protected ?int $id = null;
+
+    /**
+     * This is public identifier
+     * For unique identifier use $id
+     *
      * @var string|null
      */
     protected ?string $key = null;
@@ -32,6 +40,24 @@ class Partner extends AbstractModel
     protected ?string $password = null;
 
     /**
+     * @return int|null
+     */
+    public function getId(): int|null
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param  int|null $id
+     * @return $this
+     */
+    public function setId(int|null $id): Partner
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     public function getKey(): ?string
@@ -40,6 +66,9 @@ class Partner extends AbstractModel
     }
 
     /**
+     * This is for public identifier
+     * For unique identifier use setId
+     *
      * @param string|null $key
      * @return $this
      */
@@ -127,6 +156,7 @@ class Partner extends AbstractModel
     public function __toArray(): array
     {
         return [
+            'id' => $this->getId(),
             'key' => $this->getKey(),
             'email' => $this->getEmail(),
             'name' => $this->getName(),
@@ -140,6 +170,6 @@ class Partner extends AbstractModel
      */
     public function __toString(): string
     {
-        return (string)$this->getKey();
+        return (string)$this->getId();
     }
 }
