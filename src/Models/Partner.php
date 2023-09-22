@@ -7,9 +7,9 @@ namespace Partnero\Models;
 class Partner extends AbstractModel
 {
     /**
-     * @var int|null
+     * @var string|null
      */
-    protected ?int $id = null;
+    protected ?string $id = null;
 
     /**
      * This is public identifier
@@ -40,18 +40,18 @@ class Partner extends AbstractModel
     protected ?string $password = null;
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getId(): int|null
+    public function getId(): string|null
     {
         return $this->id;
     }
 
     /**
-     * @param  int|null $id
+     * @param  string|null $id
      * @return $this
      */
-    public function setId(int|null $id): Partner
+    public function setId(string|null $id): Partner
     {
         $this->id = $id;
         return $this;
