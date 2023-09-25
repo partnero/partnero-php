@@ -12,6 +12,7 @@ use Partnero\Endpoints\Customers;
 use Partnero\Endpoints\Settings;
 use Partnero\Endpoints\Transactions;
 use Partnero\Endpoints\Webhooks;
+use Partnero\Endpoints\Referrals;
 
 class Partnero
 {
@@ -80,6 +81,11 @@ class Partnero
      * @var Webhooks|null
      */
     protected ?Webhooks $webhooks = null;
+
+    /**
+     * @var Referrals|null
+     */
+    protected ?Referrals $referrals = null;
 
     /**
      * @param string $apiKey
@@ -208,5 +214,17 @@ class Partnero
         }
 
         return $this->webhooks;
+    }
+
+    /**
+     * @return Referrals
+     */
+    public function referrals(): Referrals
+    {
+        if (empty($this->referrals)) {
+            $this->referrals = new Referrals($this->httpLayer, $this->options);
+        }
+
+        return $this->referrals;
     }
 }

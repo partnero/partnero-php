@@ -9,6 +9,14 @@ class Partner extends AbstractModel
     /**
      * @var string|null
      */
+    protected ?string $id = null;
+
+    /**
+     * This is public identifier
+     * For unique identifier use $id
+     *
+     * @var string|null
+     */
     protected ?string $key = null;
 
     /**
@@ -34,12 +42,33 @@ class Partner extends AbstractModel
     /**
      * @return string|null
      */
+    public function getId(): string|null
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param  string|null $id
+     * @return $this
+     */
+    public function setId(string|null $id): Partner
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getKey(): ?string
     {
         return $this->key;
     }
 
     /**
+     * This is for public identifier
+     * For unique identifier use setId
+     *
      * @param string|null $key
      * @return $this
      */
@@ -127,6 +156,7 @@ class Partner extends AbstractModel
     public function __toArray(): array
     {
         return [
+            'id' => $this->getId(),
             'key' => $this->getKey(),
             'email' => $this->getEmail(),
             'name' => $this->getName(),
