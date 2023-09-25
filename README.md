@@ -27,6 +27,19 @@ Partnero PHP SDK
     * [Create webhook](#create-webhook)
     * [Update webhook](#update-webhook)
     * [Delete webhook](#delete-webhook)
+  * [Referrals API](#referrals)
+    * [Get a list of referrals](#get-a-list-of-referrals)
+    * [Create referring customer](#create-referring-customer)
+    * [Create referred customer](#create-referred-customer)
+    * [Get referral customer](#get-referral-customer)
+    * [Get list of referred customers](#get-referred-customer-list)
+    * [Get stats of referral customer](#get-referral-customer-stats)
+    * [Search referral customer](#search-referral-customer)
+    * [Update referral customer](#update-referral-customer)
+    * [Delete referral customer](#delete-referral-customer)
+    * [Invite referral customer via email](#invite-referral-customer)
+    * [Get referral customer balance](#get-referral-customer-balance)
+    * [Credit referral customer balance](#credit-referral-customer-balance)
 * [Support and Feedback](#support-and-feedback)
 
 # Installation
@@ -302,6 +315,173 @@ use Partnero\Partnero;
 $partnero = new Partnero('api_key');
 
 $partnero->webhooks()->delete('webhook-key');
+```
+
+<a name="referrals"></a>
+## Referrals
+
+<a name="get-a-list-of-referrals"></a>
+### Get a list of referrals
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->referrals()->list(50, 1, 'referred')
+```
+
+<a name="create-referring-customer"></a>
+### Create referring customer
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\Partner;
+
+$partnero = new Partnero('api_key');
+
+$customer = (new Partner())
+  ->setId('partner-id')
+  ->setName('John Doe')
+  ->setEmail('john.doe@email.com');
+
+$partnero->referrals()->createReferring($customer);
+```
+
+<a name="create-referred-customer"></a>
+### Create referred customer
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\Partner;
+
+$partnero = new Partnero('api_key');
+
+$customer = (new Partner())
+  ->setId('partner-id')
+  ->setName('Jean Doe')
+  ->setEmail('jean.doe@email.com');
+
+$referringCustomer = (new Partner())
+  ->setKey('partner-key');
+
+$partnero->referrals()->createReferred($customer, $referringCustomer)
+```
+
+<a name="get-referral-customer"></a>
+### Get referral customer
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->referrals()->find('partner-id');
+```
+
+<a name="get-referred-customer-list"></a>
+### Get referred customer list
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->referrals()->listReferred('partner-id');
+```
+
+<a name="get-referral-customer-stats"></a>
+### Get referral customer stats
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->referrals()->stats('partner-id');
+```
+
+<a name="search-referral-customer"></a>
+### Search Referral Customer
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->referrals()->search(['id' => 'partner-id']);
+```
+
+<a name="update-referral-customer"></a>
+### Update referral customer
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\Partner;
+
+$partnero = new Partnero('api_key');
+
+$newCustomer = (new Partner())
+  ->setName('Mark Doe');
+
+$partnero->referrals()->update('partner-id', $newCustomer);
+```
+
+<a name="delete-referral-customer"></a>
+### Delete referral customer
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->referrals()->delete('partner-id');
+```
+
+<a name="invite-referral-customer"></a>
+### Invite referral customer
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\Partner;
+
+$partnero = new Partnero('api_key');
+
+$customer = (new Partner())
+  ->setEmail('john.doe@email.com');
+
+$partnero->referrals()->invite($customer, [
+  'personalization_key_1' => 'personalization_value_1',
+  'personalization_key_2' => 'personalization_value_2'
+]);
+```
+
+<a name="get-referral-customer-balance"></a>
+### Get referral customer balance
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->referrals()->balance('partner-id');
+```
+
+<a name="credit-referral-customer-balance"></a>
+### Credit referral customer balance
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\BalanceCredit;
+
+$partnero = new Partnero('api_key');
+
+$credit = (new BalanceCredit())
+            ->setAmount(10)
+            ->setAmountUnits('usd')
+            ->setIsCurrency(true);
+
+$partnero->referrals()->credit('partner-id', $credit);
 ```
 
 <a name="support-and-feedback"></a>
