@@ -101,6 +101,22 @@ class Customers extends AbstractEndpoint
     }
 
     /**
+     * @param array $params
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws JsonException
+     * @throws RequestException
+     */
+    public function search(array $params = []): array
+    {
+        return $this->call(
+            'get',
+            [],
+            $this->getEndpointUri() . ':search' . (!empty($params) ? '?' . http_build_query($params) : '')
+        );
+    }
+
+    /**
      * @param string|Customer $key
      * @return array
      * @throws ClientExceptionInterface
