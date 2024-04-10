@@ -42,6 +42,16 @@ class Transaction extends AbstractModel
     protected ?string $status = null;
 
     /**
+     * @var string|null
+     */
+    protected ?string $productId = null;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $productType = null;
+
+    /**
      * @return string|null
      */
     public function getKey(): ?string
@@ -209,6 +219,42 @@ class Transaction extends AbstractModel
     }
 
     /**
+     * @return string|null
+     */
+    public function getProductId(): ?string
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param string|null $productId
+     * @return $this
+     */
+    public function setProductId(?string $productId): Transaction
+    {
+        $this->productId = $productId;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductType(): ?string
+    {
+        return $this->productType;
+    }
+
+    /**
+     * @param string|null $productType
+     * @return $this
+     */
+    public function setProductType(?string $productType): Transaction
+    {
+        $this->productType = $productType;
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function __toArray(): array
@@ -220,7 +266,9 @@ class Transaction extends AbstractModel
             'action' => $this->getAction(),
             'status' => $this->getStatus(),
             'rewarded' => $this->getRewarded(),
-            'rewardable' => $this->getRewardable()
+            'rewardable' => $this->getRewardable(),
+            'product_id' => $this->getProductId(),
+            'product_type' => $this->getProductType()
         ];
     }
 
