@@ -40,6 +40,12 @@ Partnero PHP SDK
     * [Invite referral customer via email](#invite-referral-customer)
     * [Get referral customer balance](#get-referral-customer-balance)
     * [Credit referral customer balance](#credit-referral-customer-balance)
+  * [Subscribers API](#subscribers)
+    * [Get a list of subscribers](#get-a-list-of-subscribers)
+    * [Get subscriber](#get-subscriber)
+    * [Create subscriber](#create-subscriber)
+    * [Update subscriber](#update-subscriber)
+    * [Delete subscriber](#delete-subscriber)
 * [Support and Feedback](#support-and-feedback)
 
 # Installation
@@ -483,6 +489,96 @@ $credit = (new BalanceCredit())
 
 $partnero->referrals()->credit('partner-id', $credit);
 ```
+
+<a name="subscriber-api"></a>
+## Subscribers
+
+<a name="get-a-list-of-subscribers"></a>
+### Get a list of subscribers
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\Subscriber;
+
+$partnero = new Partnero('api_key');
+
+$partnero->subscribers()->list();
+```
+
+<a name="get-subscriber"></a>
+### Get subscriber
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->subscribers()->find('subscriber-key');
+```
+
+<a name="create-subscriber"></a>
+### Create subscriber
+```php
+use Partnero\Partnero;
+use Partnero\Models\Subscriber;
+
+$partnero = new Partnero('api_key');
+
+$subscriber = (new Subscriber())
+    ->setName('Referral subscriber')
+    ->setEmail('referral@subscriber.com')
+    ->setApproved(true)
+    ->setStatus('active')
+    ->setTos(true)
+    ->setMarketingConsent(true);;
+
+$singleSubscriber = $partnero->subscribers()->create($subscriber);
+
+// If you want to create a referred subscriber
+$referredSubscriber = (new Subscriber())
+    ->setName('Referred Subscriber')
+    ->setEmail('referred@subscriber.com')
+    ->setApproved(true)
+    ->setStatus('active')
+    ->setTos(true)
+    ->setMarketingConsent(true);
+  
+$partnero->subscribers()->create($referredSubscriber, $singleSubscriber);
+```
+
+<a name="update-subscriber"></a>
+### Update subscriber
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\Subscriber;
+
+$partnero = new Partnero('api_key');
+
+$subscriber = (new Subscriber())
+  ->setKey('new-subscriber-key')
+  ->setName('John Surname')
+  ->setEmail('subscriber.john.doe@mail.com')
+  ->setApproved(true)
+  ->setStatus('active')
+  ->setTos(false)
+  ->setMarketingConsent(false);
+
+$partnero->subscribers()->update('subscriber-key', $subscriber);
+```
+
+<a name="delete-subscriber"></a>
+### Delete subscriber
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->subscribers()->delete('subscriber-key');
+```
+
+<a name="transactions-api"></a>
 
 <a name="support-and-feedback"></a>
 # Support and Feedback

@@ -54,15 +54,23 @@ class Subscribers extends AbstractEndpoint
     }
 
     /**
-     * @param array|Subscriber $subscriber
+     * @param array|Subscriber $referredSubscriber
+     * @param array|Subscriber|null $referralSubscriber
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function create(array|Subscriber $subscriber): array
+    public function create(array|Subscriber $referredSubscriber, array|Subscriber|null $referralSubscriber = null): array
     {
-        return $this->call('post', $this->modelData($subscriber));
+        $data = $this->modelData($referredSubscriber);
+
+        if (!empty($referralSubscriber)) {
+            $data['referral'] = $this->modelData($referralSubscriber);
+        }
+
+
+        return $this->call('post', $data);
     }
 
     /**
