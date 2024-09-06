@@ -545,6 +545,12 @@ $referredSubscriber = (new Subscriber())
   
 $partnero->subscribers()->create($referredSubscriber, $singleSubscriber);
 ```
+> **_NOTE:_** To create a referred subscriber, pass the parent subscriber as the second argument.
+If you’re using a response like the one in the example above, make sure to extract the necessary data from the response (e.g., $singleSubscriber['body']['data']).
+>
+> Alternatively, instead of passing the entire model as a second argument, you can pass the parent subscriber’s key or
+> email as an array, for example:
+```$partnero->subscribers()->create($referredSubscriber, ['email' => 'referral@subscriber.com']).``` 
 
 <a name="update-subscriber"></a>
 ### Update subscriber
