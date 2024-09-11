@@ -12,12 +12,12 @@ class Subscriber extends AbstractModel
     protected ?string $id = null;
 
     /**
-     * This is public identifier
+     * This is esp identifier
      * For unique identifier use $id
      *
      * @var string|null
      */
-    protected ?string $key = null;
+    protected ?string $identifier = null;
 
     /**
      * @var string|null
@@ -70,21 +70,21 @@ class Subscriber extends AbstractModel
     /**
      * @return string|null
      */
-    public function getKey(): ?string
+    public function getIdentifier(): ?string
     {
-        return $this->key;
+        return $this->identifier;
     }
 
     /**
      * This is for public identifier
      * For unique identifier use setId
      *
-     * @param string|null $key
+     * @param string|null $identifier
      * @return $this
      */
-    public function setKey(?string $key): Subscriber
+    public function setIdentifier(?string $identifier): Subscriber
     {
-        $this->key = $key;
+        $this->identifier = $identifier;
         return $this;
     }
 
@@ -205,8 +205,7 @@ class Subscriber extends AbstractModel
     public function __toArray(): array
     {
         return [
-            'id' => $this->getId(),
-            'key' => $this->getKey(),
+            'identifier' => $this->getIdentifier(),
             'email' => $this->getEmail(),
             'name' => $this->getName(),
             'approved' => $this->getApproved(),
@@ -221,6 +220,6 @@ class Subscriber extends AbstractModel
      */
     public function __toString(): string
     {
-        return (string)$this->getKey();
+        return (string)$this->getIdentifier();
     }
 }

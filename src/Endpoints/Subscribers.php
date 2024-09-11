@@ -38,18 +38,19 @@ class Subscribers extends AbstractEndpoint
     }
 
     /**
-     * @param string|Subscriber|null $key
+     * @param string|Subscriber|null $identifier
+     * @param string|null $email
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function find(string|Subscriber $key = null): array
+    public function find(string|Subscriber $identifier = null, string $email = null): array
     {
         return $this->call(
             'get',
-            self::keySearchParams($key),
-            $this->getEndpointUri() . '/' . $key
+            self::identifierOrEmailSearchParams($identifier, $email),
+            $this->getEndpointUri() . '/' . $identifier
         );
     }
 
@@ -74,20 +75,20 @@ class Subscribers extends AbstractEndpoint
     }
 
     /**
-     * @param string|Subscriber $key
+     * @param string|Subscriber $identifier
      * @param array|Subscriber $subscriber
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function update(string|Subscriber $key, array|Subscriber $subscriber): array
+    public function update(string|Subscriber $identifier, array|Subscriber $subscriber): array
     {
         return $this->call(
             'put',
             array_merge(
                 ['update' => $this->modelData($subscriber)],
-                self::keySearchParams($key)
+                self::identifierOrEmailSearchParams($identifier)
             )
         );
     }
@@ -109,32 +110,35 @@ class Subscribers extends AbstractEndpoint
     }
 
     /**
-     * @param string|Subscriber|null $key
+     * @param string|Subscriber|null $identifier
      * @param string|null $email
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function delete(string|null|Subscriber $key = null, string $email = null): array
+    public function delete(string|null|Subscriber $identifier = null, string $email = null): array
     {
-        return $this->call('delete', self::keySearchParams($key, $email));
+        return $this->call('delete', self::identifierOrEmailSearchParams($identifier, $email));
     }
 
     /**
-     * @param string|Subscriber|null $key
+     * @param string|Subscriber|null $identifier
+     * @param string|null $email
      * @return array
      */
-    public static function keySearchParams(string|null|Subscriber $key = null): array
+    public static function identifierOrEmailSearchParams(string|null|Subscriber $identifier = null, string $email = null): array
     {
         $params = [];
 
-        if (!empty($key) && is_string($key)) {
-            $params['key'] = $key;
-        } elseif ($key instanceof Subscriber) {
-            if (!is_null($key->getKey())) {
-                $params['key'] = $key->getKey();
+        if (!empty($identifier) && is_string($identifier)) {
+            $params['id'] = $identifier;
+        } elseif ($identifier instanceof Subscriber) {
+            if (!is_null($identifier->getIdentifier())) {
+                $params['id'] = $identifier->getIdentifier();
             }
+        } elseif (!empty($email)) {
+            $params['email'] = $email;
         }
 
         return $params;
