@@ -26,12 +26,16 @@ class Subscribers extends AbstractEndpoint
      * @throws RequestException
      * @throws ClientExceptionInterface
      */
-    public function list(int $limit = null): array
+    public function list(int $limit = null, string $referStatus = null): array
     {
         $params = [];
 
         if (!is_null($limit)) {
             $params['limit'] = $limit;
+        }
+
+        if (!is_null($referStatus)) {
+            $params['refer_status'] = $referStatus;
         }
 
         return $this->call('get', $params);
