@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Partnero;
 
 use Partnero\Endpoints\Customer;
+use Partnero\Endpoints\Subscribers;
 use Partnero\Http\HttpLayer;
 use Partnero\Endpoints\Test;
 use Partnero\Endpoints\Partners;
@@ -17,7 +18,7 @@ use Partnero\Endpoints\Referrals;
 class Partnero
 {
     public const API_VERSION = 'v1';
-    public const SDK_VERSION = 'v1.0.22';
+    public const SDK_VERSION = 'v1.0.23';
 
     public const OPTION_HOST = 'host';
     public const OPTION_API_PATH = 'api_path';
@@ -86,6 +87,11 @@ class Partnero
      * @var Referrals|null
      */
     protected ?Referrals $referrals = null;
+
+    /**
+     * @var Subscribers|null
+     */
+    protected ?Subscribers $subscribers = null;
 
     /**
      * @param string $apiKey
@@ -226,5 +232,17 @@ class Partnero
         }
 
         return $this->referrals;
+    }
+
+    /**
+     * @return Subscribers
+     */
+    public function subscribers(): Subscribers
+    {
+        if (empty($this->subscribers)) {
+            $this->subscribers = new Subscribers($this->httpLayer, $this->options);
+        }
+
+        return $this->subscribers;
     }
 }
