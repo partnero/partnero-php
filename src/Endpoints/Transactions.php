@@ -60,4 +60,36 @@ class Transactions extends AbstractEndpoint
             $this->getEndpointUri() . '/' . $key
         );
     }
+
+    /**
+     * @param string|Transaction $key
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws JsonException
+     * @throws RequestException
+     */
+    public function archive(string|Transaction $key): array
+    {
+        return $this->call(
+            'put',
+            ['key' => (string)$key,],
+            $this->getEndpointUri() . '/archive' . '/' . $key
+        );
+    }
+
+    /**
+     * @param string|Transaction $key
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws JsonException
+     * @throws RequestException
+     */
+    public function revokeArchived(string|Transaction $key): array
+    {
+        return $this->call(
+            'put',
+            ['key' => (string)$key,],
+            $this->getEndpointUri() . '/revoke-archive' . '/' . $key
+        );
+    }
 }
