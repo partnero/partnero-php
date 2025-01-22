@@ -7,6 +7,7 @@ namespace Partnero\Endpoints;
 use JsonException;
 use Partnero\Exceptions\RequestException;
 use Partnero\Models\ReferralLink;
+use Partnero\Models\Partner;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class ReferralLinks extends AbstractEndpoint
@@ -16,18 +17,18 @@ class ReferralLinks extends AbstractEndpoint
      */
     protected function getEndpointUri(): string
     {
-        return 'partner';
+        return 'links';
     }
 
     /**
-     * @param string $key
+     * @param string $partnerKey
      * @param int|null $limit
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function list(string $key, int $limit = null): array
+    public function list(string $partnerKey, int $limit = null): array
     {
         $params = [];
 
@@ -38,30 +39,28 @@ class ReferralLinks extends AbstractEndpoint
         return $this->call(
             'get',
             $params,
-            $this->getEndpointUri() . '/' . $key . '/links'
+            'partners/' . $partnerKey . '/' . $this->getEndpointUri()
         );
     }
 
     /**
-     * @param string $partnerId
-     * @param string $linkPartnerKey
-     * @param string $linkKey
+     * @param string $id
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function get(string $partnerId, string $linkPartnerKey, string $linkKey): array
+    public function get(string $id): array
     {
         return $this->call(
             'get',
-            ['partnerId' => $partnerId],
-            $this->getEndpointUri() . '/' . $linkPartnerKey . '/links/' . $linkKey
+            [],
+            $this->getEndpointUri() . '/' . $id
         );
     }
 
     /**
-     * @param string $partnerId
+     * @param array|Partner $partner
      * @param array|ReferralLink $link
      * @param int|null $domainId
      * @param bool|null $isAdditional
@@ -70,56 +69,68 @@ class ReferralLinks extends AbstractEndpoint
      * @throws JsonException
      * @throws RequestException
      */
-    public function create(string $partnerId, array|ReferralLink $link, int $domainId = null, bool $isAdditional = null): array
+    public function create(
+        array|ReferralLink $link,
+        array|Partner $partner,
+        int $domainId = null,
+        bool $isAdditional = null
+    ): array
     {
-        return $this->call('post',
-            array_merge(
-                $this->modelData($link),
-                [
-                    'domain_id' => $domainId,
-                    'is_additional' => $isAdditional ?? false
-                ]),
-            $this->getEndpointUri() . '/' . $partnerId . '/links'
-        );
+        $data = array_merge(
+                    $this->modelData($link),
+                    [
+                        'domain_id' => $domainId,
+                        'is_additional' => $isAdditional ?? false
+                ]);
+        $data['partner'] = $this->modelData($partner);
+
+        return $this->call('post', $data);
     }
 
     /**
-     * @param string $partnerId
-     * @param string $linkPartnerKey
-     * @param string $linkKey
+     * @param string $id
      * @param array|ReferralLink $link
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function update(string $partnerId, string $linkPartnerKey, string $linkKey, array|ReferralLink $link): array
+    public function update(string $id, array|ReferralLink $link): array
     {
-        return $this->call(
-            'put',
-            array_merge(
-                $this->modelData($link),
-                ['partnerId' => $partnerId],
-            ),
-            $this->getEndpointUri() . '/' . $linkPartnerKey . '/links/' . $linkKey,
-        );
+        $data = $this->modelData($link);
+
+        return $this->call('put', $data, $this->getEndpointUri() . '/' . $id);
     }
 
     /**
-     * @param string $partnerId
-     * @param string $linkPartnerKey
-     * @param string $linkKey
+     * @param array $params
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function delete(string $partnerId, string $linkPartnerKey, string $linkKey): array
+    public function search(array $params = []): array
+    {
+        return $this->call(
+            'get',
+            [],
+            $this->getEndpointUri() . ':search' . (!empty($params) ? '?' . http_build_query($params) : '')
+        );
+    }
+
+    /**
+     * @param string $id
+     * @return array
+     * @throws ClientExceptionInterface
+     * @throws JsonException
+     * @throws RequestException
+     */
+    public function delete(string $id): array
     {
         return $this->call(
             'delete',
-            ['partnerId' => $partnerId],
-            $this->getEndpointUri() . '/' . $linkPartnerKey . '/links/' . $linkKey
+            [],
+            $this->getEndpointUri() . '/' . $id
         );
     }
 }

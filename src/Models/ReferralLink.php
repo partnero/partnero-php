@@ -20,12 +20,6 @@ class ReferralLink extends AbstractModel
     protected ?string $key = null;
 
     /**
-     *
-     * @var string|null
-     */
-    protected ?string $partnerKey = null;
-
-    /**
      * @var string|null
      */
     protected ?string $url = null;
@@ -33,7 +27,12 @@ class ReferralLink extends AbstractModel
     /**
      * @var bool|null
      */
-    protected ?bool $programMain = null;
+    protected ?bool $default = null;
+
+    /**
+     * @var bool|null
+     */
+    protected ?bool $isAdditional = null;
 
     /**
      * @var bool|null
@@ -92,24 +91,6 @@ class ReferralLink extends AbstractModel
     /**
      * @return string|null
      */
-    public function getPartnerKey(): ?string
-    {
-        return $this->partnerKey;
-    }
-
-    /**
-     * @param string|null $partnerKey
-     * @return $this
-     */
-    public function setPartnerKey(?string $partnerKey): ReferralLink
-    {
-        $this->partnerKey = $partnerKey;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
     public function getUrl(): ?string
     {
         return $this->url;
@@ -128,18 +109,36 @@ class ReferralLink extends AbstractModel
     /**
      * @return bool|null
      */
-    public function getProgramMain(): ?bool
+    public function getDefault(): ?bool
     {
-        return $this->programMain;
+        return $this->default;
     }
 
     /**
-     * @param bool|null $programMain
+     * @param bool|null $default
      * @return $this
      */
-    public function setProgramMain(?bool $programMain): ReferralLink
+    public function setDefault(?bool $default): ReferralLink
     {
-        $this->programMain = $programMain;
+        $this->default = $default;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getIsAdditional(): ?bool
+    {
+        return $this->isAdditional;
+    }
+
+    /**
+     * @param bool|null $isAdditional
+     * @return $this
+     */
+    public function setIsAdditional(?bool $isAdditional): ReferralLink
+    {
+        $this->isAdditional = $isAdditional;
         return $this;
     }
 
@@ -205,9 +204,9 @@ class ReferralLink extends AbstractModel
         return [
             'id' => $this->getId(),
             'key' => $this->getKey(),
-            'partnerKey' => $this->getPartnerKey(),
             'url' => $this->getUrl(),
-            'programMain' => $this->getProgramMain(),
+            'default' => $this->getDefault(),
+            'isAdditional' => $this->getIsAdditional(),
             'directTracking' => $this->getDirectTracking(),
             'directTrackingRedirect' => $this->getDirectTrackingRedirect(),
             'directTrackingRedirectUrl' => $this->getDirectTrackingRedirectUrl()
