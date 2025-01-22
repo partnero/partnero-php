@@ -565,6 +565,7 @@ $partner = (new Partner())
   ->setName('Jean Doe')
   ->setEmail('jean.doe@email.com');
 
+// For refer a friend program, add third argument as string 'referral' to create method
 $partnero->referralLinks()->create($link, $partner);
 ```
 

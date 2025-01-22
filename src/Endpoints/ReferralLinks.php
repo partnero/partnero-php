@@ -60,8 +60,9 @@ class ReferralLinks extends AbstractEndpoint
     }
 
     /**
-     * @param array|Partner $partner
      * @param array|ReferralLink $link
+     * @param array|Partner $partner
+     * @param string $programType
      * @param int|null $domainId
      * @param bool|null $isAdditional
      * @return array
@@ -72,6 +73,7 @@ class ReferralLinks extends AbstractEndpoint
     public function create(
         array|ReferralLink $link,
         array|Partner $partner,
+        string $programType = 'affiliate',
         int $domainId = null,
         bool $isAdditional = null
     ): array
@@ -82,7 +84,14 @@ class ReferralLinks extends AbstractEndpoint
                         'domain_id' => $domainId,
                         'is_additional' => $isAdditional ?? false
                 ]);
-        $data['partner'] = $this->modelData($partner);
+
+        if ($programType === 'affiliate') {
+            $data['partner'] = $this->modelData($partner);
+        }
+
+        if ($programType === 'referral') {
+            $data['customer'] = $this->modelData($partner);
+        }
 
         return $this->call('post', $data);
     }
