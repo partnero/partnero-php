@@ -10,14 +10,14 @@ use Partnero\Models\ReferralLink;
 use Partnero\Models\Partner;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class ReferralLinks extends AbstractEndpoint
+class CustomerReferralLinks extends AbstractEndpoint
 {
     /**
      * @return string
      */
     protected function getEndpointUri(): string
     {
-        return 'links';
+        return 'customer_referral_links';
     }
 
     /**
@@ -39,7 +39,7 @@ class ReferralLinks extends AbstractEndpoint
         return $this->call(
             'get',
             $params,
-            'partners/' . $partnerKey . '/' . $this->getEndpointUri()
+            'customers/' . $partnerKey . '/referral_links'
         );
     }
 
@@ -62,7 +62,6 @@ class ReferralLinks extends AbstractEndpoint
     /**
      * @param array|ReferralLink $link
      * @param array|Partner $partner
-     * @param string $programType
      * @param int|null $domainId
      * @param bool|null $isAdditional
      * @return array
@@ -73,7 +72,6 @@ class ReferralLinks extends AbstractEndpoint
     public function create(
         array|ReferralLink $link,
         array|Partner $partner,
-        string $programType = 'affiliate',
         int $domainId = null,
         bool $isAdditional = null
     ): array
@@ -85,13 +83,7 @@ class ReferralLinks extends AbstractEndpoint
                         'is_additional' => $isAdditional ?? false
                 ]);
 
-        if ($programType === 'affiliate') {
-            $data['partner'] = $this->modelData($partner);
-        }
-
-        if ($programType === 'referral') {
-            $data['customer'] = $this->modelData($partner);
-        }
+        $data['customer'] = $this->modelData($partner);
 
         return $this->call('post', $data);
     }
