@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Partnero;
 
 use Partnero\Endpoints\Customer;
-use Partnero\Endpoints\ReferralLinks;
+use Partnero\Endpoints\CustomerReferralLinks;
+use Partnero\Endpoints\PartnerReferralLinks;
 use Partnero\Endpoints\Subscribers;
 use Partnero\Http\HttpLayer;
 use Partnero\Endpoints\Test;
@@ -80,9 +81,14 @@ class Partnero
     protected ?Transactions $transactions = null;
 
     /**
-     * @var ReferralLinks|null
+     * @var PartnerReferralLinks|null
      */
-    protected ?ReferralLinks $referralLinks = null;
+    protected ?PartnerReferralLinks $partnerReferralLinks = null;
+
+    /**
+     * @var CustomerReferralLinks|null
+     */
+    protected ?CustomerReferralLinks $customerReferralLinks = null;
 
     /**
      * @var Webhooks|null
@@ -205,15 +211,27 @@ class Partnero
     }
 
     /**
-     * @return ReferralLinks
+     * @return PartnerReferralLinks
      */
-    public function referralLinks(): ReferralLinks
+    public function partnerReferralLinks(): PartnerReferralLinks
     {
-        if (empty($this->referralLinks)) {
-            $this->referralLinks = new ReferralLinks($this->httpLayer, $this->options);
+        if (empty($this->partnerReferralLinks)) {
+            $this->partnerReferralLinks = new PartnerReferralLinks($this->httpLayer, $this->options);
         }
 
-        return $this->referralLinks;
+        return $this->partnerReferralLinks;
+    }
+
+    /**
+     * @return CustomerReferralLinks
+     */
+    public function customerReferralLinks(): CustomerReferralLinks
+    {
+        if (empty($this->customerReferralLinks)) {
+            $this->customerReferralLinks = new CustomerReferralLinks($this->httpLayer, $this->options);
+        }
+
+        return $this->customerReferralLinks;
     }
 
     /**

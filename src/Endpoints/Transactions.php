@@ -71,9 +71,9 @@ class Transactions extends AbstractEndpoint
     public function archive(string|Transaction $key): array
     {
         return $this->call(
-            'put',
+            'post',
             ['key' => (string)$key,],
-            $this->getEndpointUri() . '/archive' . '/' . $key
+            $this->getEndpointUri() . '/' . $key . '/archive'
         );
     }
 
@@ -87,9 +87,9 @@ class Transactions extends AbstractEndpoint
     public function revokeArchived(string|Transaction $key): array
     {
         return $this->call(
-            'put',
+            'post',
             ['key' => (string)$key,],
-            $this->getEndpointUri() . '/revoke-archive' . '/' . $key
+            $this->getEndpointUri() . '/' . $key . '/revoke-archive'
         );
     }
 }
