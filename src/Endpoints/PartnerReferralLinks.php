@@ -21,14 +21,14 @@ class PartnerReferralLinks extends AbstractEndpoint
     }
 
     /**
-     * @param string $partnerKey
+     * @param string $partnerId
      * @param int|null $limit
      * @return array
      * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
      */
-    public function list(string $partnerKey, int $limit = null): array
+    public function list(string $partnerId, int $limit = null): array
     {
         $params = [];
 
@@ -39,7 +39,7 @@ class PartnerReferralLinks extends AbstractEndpoint
         return $this->call(
             'get',
             $params,
-            'partners/' . $partnerKey . '/referral_links'
+            'partners/' . $partnerId . '/referral_links'
         );
     }
 

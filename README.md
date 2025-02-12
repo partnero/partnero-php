@@ -49,6 +49,13 @@ Partnero PHP SDK
     * [Update partner referral link](#update-partner-referral-link)
     * [Delete partner referral link](#delete-partner-referral-link)
     * [Search partner referral link](#search-partner-referral-link)
+  * [Referral program - Customer referral link API](#customer-referral-link)
+    * [Get list of a customer referral links](#get-a-list-of-a-customer-referral-links)
+    * [Create customer referral link](#create-customer-referral-link)
+    * [Get customer referral link](#get-customer-referral-link)
+    * [Update customer referral link](#update-customer-referral-link)
+    * [Delete customer referral link](#delete-customer-referral-link)
+    * [Search customer referral link](#search-customer-referral-link)
   * [Subscribers API](#subscribers)
     * [Get a list of subscribers](#get-a-list-of-subscribers)
     * [Get subscriber](#get-subscriber)
@@ -566,7 +573,6 @@ $partner = (new Partner())
   ->setName('Jean Doe')
   ->setEmail('jean.doe@email.com');
 
-// For refer a friend program, add third argument as string 'referral' to create method
 $partnero->partnerReferralLinks()->create($link, $partner);
 ```
 
@@ -606,6 +612,91 @@ $partnero = new Partnero('api_key');
 
 // use id or key
 $partnero->partnerReferralLinks()->search(['id' => 'link-id']);
+```
+
+<a name="customer-referral-link"></a>
+## Customer referral link
+
+
+<a name="get-a-list-of-a-customer-referral-links"></a>
+### Get a list of a customer referral links
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\ReferralLink;
+
+$partnero = new Partnero('api_key');
+
+$partnero->customerReferralLinks()->list('customer-key', 'limit');
+```    
+
+
+<a name="get-customer-referral-link"></a>
+### Get customer referral link
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->customerReferralLinks()->get('link-id');
+```
+
+<a name="create-customer-referral-link"></a>
+### Create customer referral link
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\ReferralLink;
+
+$partnero = new Partnero('api_key');
+
+$link = (new ReferralLink())
+    ->setKey('referral-link-key');
+
+$partnero->customerReferralLinks()->create($link, $partner);
+```
+
+<a name="update-customer-referral-link"></a>
+### Update customer referral link
+
+```php
+use Partnero\Partnero;
+use Partnero\Models\ReferralLink;
+
+$partnero = new Partnero('api_key');
+
+$link = (new ReferralLink())
+    ->setKey('referral-updated-link-key');
+
+$partnero->customerReferralLinks()->update('link-id', $link);
+```
+
+<a name="delete-customer-referral-link"></a>
+### Delete customer referral link
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+$partnero->customerReferralLinks()->delete('link-id');
+```
+
+<a name="search-customer-referral-link"></a>
+### Search customer referral link
+
+```php
+use Partnero\Partnero;
+
+$partnero = new Partnero('api_key');
+
+// use id or key
+$partnero->customerReferralLinks()->search(['id' => 'link-id']);
+
+// Optionally, you can pass customer as a second parameter
+$partnero->customerReferralLinks()->search(['key' => 'link-key', 'customer' => ['id' => 'customer-id']]);
+
 ```
 
 <a name="subscriber-api"></a>
