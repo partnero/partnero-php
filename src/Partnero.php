@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Partnero;
 
 use Partnero\Endpoints\Customer;
+use Partnero\Endpoints\CustomerReferralLinks;
+use Partnero\Endpoints\PartnerReferralLinks;
 use Partnero\Endpoints\Subscribers;
 use Partnero\Http\HttpLayer;
 use Partnero\Endpoints\Test;
@@ -77,6 +79,16 @@ class Partnero
      * @var Transactions|null
      */
     protected ?Transactions $transactions = null;
+
+    /**
+     * @var PartnerReferralLinks|null
+     */
+    protected ?PartnerReferralLinks $partnerReferralLinks = null;
+
+    /**
+     * @var CustomerReferralLinks|null
+     */
+    protected ?CustomerReferralLinks $customerReferralLinks = null;
 
     /**
      * @var Webhooks|null
@@ -196,6 +208,30 @@ class Partnero
         }
 
         return $this->transactions;
+    }
+
+    /**
+     * @return PartnerReferralLinks
+     */
+    public function partnerReferralLinks(): PartnerReferralLinks
+    {
+        if (empty($this->partnerReferralLinks)) {
+            $this->partnerReferralLinks = new PartnerReferralLinks($this->httpLayer, $this->options);
+        }
+
+        return $this->partnerReferralLinks;
+    }
+
+    /**
+     * @return CustomerReferralLinks
+     */
+    public function customerReferralLinks(): CustomerReferralLinks
+    {
+        if (empty($this->customerReferralLinks)) {
+            $this->customerReferralLinks = new CustomerReferralLinks($this->httpLayer, $this->options);
+        }
+
+        return $this->customerReferralLinks;
     }
 
     /**

@@ -21,10 +21,11 @@ class Subscribers extends AbstractEndpoint
 
     /**
      * @param int|null $limit
+     * @param string|null $referStatus
      * @return array
+     * @throws ClientExceptionInterface
      * @throws JsonException
      * @throws RequestException
-     * @throws ClientExceptionInterface
      */
     public function list(int $limit = null, string $referStatus = null): array
     {
